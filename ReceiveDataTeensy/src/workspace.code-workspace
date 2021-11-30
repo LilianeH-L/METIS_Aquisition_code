@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "MetisTest_V1",
+			"path": "..\\..\\MetisTest_V1"
+		},
+		{
+			"name": "blabla",
+			"path": "..\\..\\blabla"
+		},
+		{
+			"name": "ReceiveDataTeensy",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
