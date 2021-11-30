@@ -38,16 +38,15 @@ namespace METIS_FormV2
             this.lbComPorts = new System.Windows.Forms.Label();
             this.lbBaudRate = new System.Windows.Forms.Label();
             this.btnOpenPort = new System.Windows.Forms.Button();
-            this.btnClosePort = new System.Windows.Forms.Button();
-            this.txbADC = new System.Windows.Forms.TextBox();
-            this.lbADC = new System.Windows.Forms.Label();
+            this.btnStop = new System.Windows.Forms.Button();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.chartData = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.chartDataM1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartDataM1)).BeginInit();
             this.SuspendLayout();
             // 
             // cbComPorts
@@ -101,32 +100,15 @@ namespace METIS_FormV2
             this.btnOpenPort.UseVisualStyleBackColor = true;
             this.btnOpenPort.Click += new System.EventHandler(this.btnOpenPort_Click);
             // 
-            // btnClosePort
+            // btnStop
             // 
-            this.btnClosePort.Location = new System.Drawing.Point(17, 132);
-            this.btnClosePort.Name = "btnClosePort";
-            this.btnClosePort.Size = new System.Drawing.Size(159, 65);
-            this.btnClosePort.TabIndex = 5;
-            this.btnClosePort.Text = "Close Port";
-            this.btnClosePort.UseVisualStyleBackColor = true;
-            this.btnClosePort.Click += new System.EventHandler(this.btnClosePort_Click);
-            // 
-            // txbADC
-            // 
-            this.txbADC.Location = new System.Drawing.Point(361, 57);
-            this.txbADC.Name = "txbADC";
-            this.txbADC.Size = new System.Drawing.Size(201, 31);
-            this.txbADC.TabIndex = 6;
-            this.txbADC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lbADC
-            // 
-            this.lbADC.AutoSize = true;
-            this.lbADC.Location = new System.Drawing.Point(226, 60);
-            this.lbADC.Name = "lbADC";
-            this.lbADC.Size = new System.Drawing.Size(129, 25);
-            this.lbADC.TabIndex = 7;
-            this.lbADC.Text = "ADC Value :";
+            this.btnStop.Location = new System.Drawing.Point(407, 125);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(190, 65);
+            this.btnStop.TabIndex = 5;
+            this.btnStop.Text = "Stop Acquiring";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // serialPort1
             // 
@@ -148,11 +130,10 @@ namespace METIS_FormV2
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.chartData);
+            this.groupBox4.Controls.Add(this.btnStart);
+            this.groupBox4.Controls.Add(this.chartDataM1);
             this.groupBox4.Controls.Add(this.btnOpenPort);
-            this.groupBox4.Controls.Add(this.btnClosePort);
-            this.groupBox4.Controls.Add(this.lbADC);
-            this.groupBox4.Controls.Add(this.txbADC);
+            this.groupBox4.Controls.Add(this.btnStop);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
@@ -161,22 +142,32 @@ namespace METIS_FormV2
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Acquire Data";
             // 
-            // chartData
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(407, 49);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(190, 65);
+            this.btnStart.TabIndex = 9;
+            this.btnStart.Text = "Start Acquiring";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // chartDataM1
             // 
             chartArea1.Name = "ChartArea1";
-            this.chartData.ChartAreas.Add(chartArea1);
+            this.chartDataM1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.chartData.Legends.Add(legend1);
-            this.chartData.Location = new System.Drawing.Point(27, 210);
-            this.chartData.Name = "chartData";
+            this.chartDataM1.Legends.Add(legend1);
+            this.chartDataM1.Location = new System.Drawing.Point(27, 210);
+            this.chartDataM1.Name = "chartDataM1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Legend = "Legend1";
             series1.Name = "Data";
-            this.chartData.Series.Add(series1);
-            this.chartData.Size = new System.Drawing.Size(1406, 600);
-            this.chartData.TabIndex = 8;
-            this.chartData.Text = "Data";
+            this.chartDataM1.Series.Add(series1);
+            this.chartDataM1.Size = new System.Drawing.Size(1406, 600);
+            this.chartDataM1.TabIndex = 8;
+            this.chartDataM1.Text = "Data";
             // 
             // Form1
             // 
@@ -191,8 +182,7 @@ namespace METIS_FormV2
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartDataM1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -204,13 +194,12 @@ namespace METIS_FormV2
         private System.Windows.Forms.Label lbComPorts;
         private System.Windows.Forms.Label lbBaudRate;
         private System.Windows.Forms.Button btnOpenPort;
-        private System.Windows.Forms.Button btnClosePort;
-        private System.Windows.Forms.TextBox txbADC;
-        private System.Windows.Forms.Label lbADC;
+        private System.Windows.Forms.Button btnStop;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartData;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartDataM1;
+        private System.Windows.Forms.Button btnStart;
     }
 }
 

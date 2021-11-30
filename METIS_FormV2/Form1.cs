@@ -14,11 +14,13 @@ namespace METIS_FormV2
     public partial class Form1 : Form
     {
         #region Variables
-        int serialDataIn;
-        int index = 0;
-        int[] dataArray = new int[50];
+        string lineDataIn;
+        byte[] commandToSend = { 2 };
+        int index, serialDataIn, indexOfStop;
+        int[] dataArray = new int[200];
 
         #endregion
+
 
         public Form1()
         {
@@ -28,11 +30,15 @@ namespace METIS_FormV2
         private void Form1_Load(object sender, EventArgs e)
         {
             btnOpenPort.Enabled = true;
-            btnClosePort.Enabled = false;
+            btnStart.Enabled = false;
+            btnStop.Enabled = false;
             cbBaudRate.Text = "9600";
-            txbADC.Enabled = false;
 
-            chartData.Series["Data"].Points.AddXY(1, 1);
+            chartDataM1.Series["Data"].Points.AddXY(1, 1);
+            chartDataM1.ChartAreas[0].AxisX.Maximum = 200;
+            chartDataM1.ChartAreas[0].AxisX.Minimum = 0;
+            chartDataM1.ChartAreas[0].AxisY.Maximum = 4096;
+            chartDataM1.ChartAreas[0].AxisY.Minimum = 0;
         }
 
         #region Buttons
@@ -42,14 +48,13 @@ namespace METIS_FormV2
             {
                 serialPort1.PortName = cbComPorts.Text;
                 serialPort1.BaudRate = Convert.ToInt32(cbBaudRate.Text);
-                serialPort1.Open();
 
                 btnOpenPort.Enabled = false;
-                btnClosePort.Enabled = true;
-                cbComPorts.Enabled = false;
-                cbBaudRate.Enabled = false;
+                btnStart.Enabled = true;
+                btnStop.Enabled = false;
 
-                chartData.Series["Data"].Points.Clear();
+                chartDataM1.Series["Data"].Points.Clear();
+
             }
             catch(Exception error)
             {
@@ -57,16 +62,31 @@ namespace METIS_FormV2
             }
         }
 
-        private void btnClosePort_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen == false)
+            {
+                serialPort1.Open();
+            }
+
+            btnStart.Enabled = false;
+            btnStop.Enabled = true;
+            cbComPorts.Enabled = false;
+            cbBaudRate.Enabled = false;
+
+            commandToSend[0] = 1;
+            serialPort1.Write(commandToSend, 0, 1);
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
         {
             try
             {
-                serialPort1.Close();
+                btnStart.Enabled = true;
+                btnStop.Enabled = false;
 
-                btnOpenPort.Enabled = true;
-                btnClosePort.Enabled = false;
-                cbComPorts.Enabled = true;
-                cbBaudRate.Enabled = true;
+                commandToSend[0] = 2;
+                serialPort1.Write(commandToSend, 0, 1);
             }
             catch (Exception error)
             {
@@ -82,16 +102,20 @@ namespace METIS_FormV2
             cbComPorts.Items.Clear();
             cbComPorts.Items.AddRange(portsList);
         }
-
-
-
-
         #endregion
+
+
 
         #region Data Reception
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            serialDataIn = serialPort1.ReadByte();
+            //Read line printed by Teensy after converting a value
+            lineDataIn = serialPort1.ReadLine();
+
+            //Process line
+            indexOfStop = lineDataIn.IndexOf('%');
+            serialDataIn = Convert.ToInt32(lineDataIn.Substring(0, indexOfStop));
+
             this.BeginInvoke(new EventHandler(UpdateArray));
         }
 
@@ -99,18 +123,19 @@ namespace METIS_FormV2
         {
             try
             {
-                if (index < dataArray.Length - 1)
+                if (index < 1)
                 {
-                    chartData.Series["Data"].Points.AddY(serialDataIn);
+                    chartDataM1.Series["Data"].Points.AddY(serialDataIn);
+                    chartDataM1.Series["Data"].Points.Clear();
                     index++;
                 }
                 else
                 {
                     ShiftData(dataArray, serialDataIn);
-                    chartData.Series["Data"].Points.Clear();
+                    chartDataM1.Series["Data"].Points.Clear();
                     for (int i = 0; i < dataArray.Length - 1; i++)
                     {
-                        chartData.Series["Data"].Points.AddY(dataArray[i]);
+                        chartDataM1.Series["Data"].Points.AddY(dataArray[i]);
                     }
                 }
             }
