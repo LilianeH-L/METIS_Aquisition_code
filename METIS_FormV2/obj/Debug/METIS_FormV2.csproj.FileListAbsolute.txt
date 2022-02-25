@@ -18,3 +18,14 @@ C:\Users\truiz\OneDrive\Desktop\EssaiChart\METIS_FormV2\obj\Debug\METIS_FormV2.c
 C:\Users\truiz\OneDrive\Desktop\EssaiChart\METIS_FormV2\obj\Debug\METIS_FormV2.csproj.CoreCompileInputs.cache
 C:\Users\truiz\OneDrive\Desktop\EssaiChart\METIS_FormV2\obj\Debug\METIS_FormV2.exe
 C:\Users\truiz\OneDrive\Desktop\EssaiChart\METIS_FormV2\obj\Debug\METIS_FormV2.pdb
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\bin\Debug\METIS_FormV2.exe.config
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\bin\Debug\METIS_FormV2.exe
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\bin\Debug\METIS_FormV2.pdb
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.csproj.AssemblyReference.cache
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.csproj.SuggestedBindingRedirects.cache
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.Form1.resources
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.Properties.Resources.resources
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.csproj.GenerateResource.cache
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.csproj.CoreCompileInputs.cache
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.exe
+C:\Users\Liliane\Documents\GitHub\METIS_Aquisition_code\METIS_FormV2\obj\Debug\METIS_FormV2.pdb
