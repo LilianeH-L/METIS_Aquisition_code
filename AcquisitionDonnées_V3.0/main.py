@@ -8,16 +8,16 @@ import multiprocessing
 import matplotlib.pyplot as plt
 
 # Define variables
-nbElectrodes = 2
-nbEncoders = 4
+nbElectrodes = 4
+nbEncoders = 3
+A=[]
 for i in range(0,nbElectrodes):
     electrode=[]
-    A=[]
     A.append(electrode)
 for i in range(0,nbEncoders):
     encodeur=[]
     A.append(encodeur)
-
+print(A)
 
 
 #def retrieveData():
@@ -31,7 +31,7 @@ portOpen = False
 while not portOpen:
     try:
         # Make sure COM port is correct (see in Gestionnaire de périphériques)
-        arduino = serial.Serial(port='COM3', baudrate=1000000, timeout=None, xonxoff=False, rtscts=False,
+        arduino = serial.Serial(port='COM7', baudrate=1000000, timeout=None, xonxoff=False, rtscts=False,
                                 dsrdtr=False)
         # Clear the serial buffer (input and output)
         arduino.flushInput()
@@ -78,35 +78,24 @@ except KeyboardInterrupt:
 
     # Plot all values obtained
     for i in range(0, len(values) - (len(A)-1), len(A)):
-        for j in range(0,len(values-len(A-1))):
-            A[i].append(values[j])
+        for j in range(0, len(A)):
+            A[j].append(values[i + j])
 
-
-    fig, axs = plt.subplots(nbElectrodes, nbEncoders)
-    fig.suptitle('Resultats obtenus')
+    fig, axs = plt.subplots(nbElectrodes)
+    fig.suptitle('Resultats obtenus Electrodes')
     numeroElectrode = 0
-    numeroEncodeur=0
-    for i in range(0, nbElectrodes-1):
-        axs[0, numeroElectrode].plot(A[i])
-        axs[0, numeroElectrode].set_title(f'Electrode {numeroElectrode}')
+    for i in range(0, nbElectrodes):
+        axs[numeroElectrode].plot(A[i])
+        axs[numeroElectrode].set_title(f'Electrode {numeroElectrode}')
         numeroElectrode+=1
-    for i in range(nbElectrodes,len(A)-1):
-        axs[1, numeroEncodeur].plot(A[i])
-        axs[1, numeroEncodeur].set_title(f'Encodeur {numeroEncodeur}')
-    """"    
-        axs[0, 1].plot(electrode2)
-    axs[0, 1].set_title('Electrode 2')
-    #axs[0, 2].plot(electrode3)
-    #axs[0, 2].set_title('Electrode 3')
-    #axs[0, 3].plot(electrode4)
-    #axs[0, 3].set_title('Electrode 4')
-    axs[1, 0].plot(encodeur1)
-    axs[1, 0].set_title('Encodeur 1')
-    axs[1, 1].plot(encodeur2)
-    axs[1, 1].set_title('Encodeur 2')
-    axs[1, 2].plot(encodeur3)
-    axs[1, 2].set_title('Encodeur 3')
-    axs[1, 3].plot(encodeur4)
-    axs[1, 3].set_title('Encodeur 4')"""
+    plt.show()
+
+    fig, axs = plt.subplots(nbEncoders)
+    fig.suptitle('Resultats obtenus Encodeurs')
+    numeroEncodeur = 0
+    for i in range(nbElectrodes,len(A)):
+        axs[numeroEncodeur].plot(A[i])
+        axs[numeroEncodeur].set_title(f'Encodeur {numeroEncodeur}')
+        numeroEncodeur += 1
     plt.show()
     print('Acquisition done')
