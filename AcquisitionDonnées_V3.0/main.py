@@ -8,7 +8,7 @@ import multiprocessing
 import matplotlib.pyplot as plt
 
 # Define variables
-nbElectrodes = 4
+nbElectrodes = 3
 nbEncoders = 3
 A=[]
 for i in range(0,nbElectrodes):
@@ -18,11 +18,6 @@ for i in range(0,nbEncoders):
     encodeur=[]
     A.append(encodeur)
 print(A)
-
-
-#def retrieveData():
-
-
 
 
 # Check if serial port is open
