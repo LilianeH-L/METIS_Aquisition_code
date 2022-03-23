@@ -4,16 +4,16 @@
 unsigned long currentMicros;
 int interval = 500;
 
+//Values to change depending on tests to be made
+const int numberOfElectrodes = 3;
+const int numberOfEncoder = 3;
+
 /* For reading myoware signals */
 //Assign pins
 const int analogPin1 = 15;
 const int analogPin2 = 16;
-//const int analogPin3 = 17;
-//const int analogPin4 = 18;
-//const int analogPin5 = 19;
-//const int analogPin6 = 20;
-//const int analogPin7 = 21;
-//const int analogPin8 = 22;
+const int analogPin3 = 21;
+const int analogPin4 = 22;
 
 /* For reading encoder signals */
 //Name pins
@@ -32,9 +32,8 @@ Encoder encod2(encoder2_Pin1, encoder2_Pin2);
 Encoder encod3(encoder3_Pin1, encoder3_Pin2);
 Encoder encod4(encoder4_Pin1, encoder4_Pin2);
 
-//Values to change depending on tests to be made
-const int numberOfElectrodes = 2;
-const int numberOfEncoder = 4;
+int electrodePin[4] = {analogPin1, analogPin2, analogPin3, analogPin4};
+Encoder encoder[4] = {encod1, encod2, encod3, encod4};
 
 //Variables for sending packages
 byte counterElectrode = 0;
@@ -75,10 +74,9 @@ void setup() {
   analogReadResolution(12);
 
   //Reset encoder position
-  encod1.write(1600);
-  encod2.write(1600);
-  encod3.write(1600);
-  encod4.write(1600);
+  for(int i = 0; i < numberOfEncoder; i++) {
+    encoder[i].write(1600);
+  }
 }
 
 
@@ -92,21 +90,14 @@ void loop() {
   counterEncoder = 0;
 
   //Read all electrode signals
-  valueElectrode[0] = analogRead(analogPin1);
-  valueElectrode[1] = analogRead(analogPin2);
-  //valueElectrode[2] = analogRead(analogPin3);
-  //valueElectrode[3] = analogRead(analogPin4);
-  //valueElectrode[4] = analogRead(analogPin5);
-  //valueElectrode[5] = analogRead(analogPin6);
-  //valueElectrode[6] = analogRead(analogPin7);
-  //valueElectrode[7] = analogRead(analogPin8);
+  for(int i = 0; i < numberOfElectrodes; i++) {
+    valueElectrode[i] = analogRead(electrodePin[i]);
+  }
 
   //Read all encoder signals
-  
-  valueEncoder[0] = abs(encod1.read());
-  valueEncoder[1] = abs(encod2.read());
-  valueEncoder[2] = abs(encod3.read());
-  valueEncoder[3] = abs(encod4.read());
+  for(int i = 0; i < numberOfEncoder; i++) {
+    valueEncoder[i] = abs(encoder[i].read());
+  }
 
 
   //Decompose all values from electrodes
