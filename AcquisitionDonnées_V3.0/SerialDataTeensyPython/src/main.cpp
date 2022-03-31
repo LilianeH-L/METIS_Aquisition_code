@@ -5,8 +5,8 @@ unsigned long currentMicros;
 int interval = 500;
 
 //Values to change depending on tests to be made
-const int numberOfElectrodes = 3;
-const int numberOfEncoder = 3;
+const int numberOfElectrodes = 2;
+const int numberOfEncoder = 4;
 
 /* For reading myoware signals */
 //Assign pins
@@ -74,9 +74,16 @@ void setup() {
   analogReadResolution(12);
 
   //Reset encoder position
+  /*
   for(int i = 0; i < numberOfEncoder; i++) {
     encoder[i].write(1600);
   }
+  */
+  //Vraisemblablement il accepte pas les tableaux d'encodeurs donc le code suivant est un patch temporaire
+  encod1.write(5000);
+  encod2.write(5000);
+  encod3.write(5000);
+  encod4.write(5000);
 }
 
 
@@ -95,9 +102,15 @@ void loop() {
   }
 
   //Read all encoder signals
+  /*
   for(int i = 0; i < numberOfEncoder; i++) {
-    valueEncoder[i] = abs(encoder[i].read());
+    //valueEncoder[i] = abs(encoder[i].read());
   }
+  */
+  valueEncoder[0] = abs(encod1.read());
+  valueEncoder[1] = abs(encod2.read());
+  valueEncoder[2] = abs(encod3.read());
+  valueEncoder[3] = abs(encod4.read());
 
 
   //Decompose all values from electrodes
@@ -107,7 +120,7 @@ void loop() {
       //We decompose valueElectrode in 2 : 
         //First value is for the MSB byte
         //Second value is for the LSB byte
-      valuesToSend[i] = valueElectrode[counterElectrode] & 255;
+      valuesToSend[i] = valueElectrode[counterElectrode] & 255; 
       valuesToSend[i + 1] = (valueElectrode[counterElectrode] >> 8) & 255;
       
       i++;
