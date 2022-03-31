@@ -1,16 +1,18 @@
 import serial
 import queue
-import multiprocessing as mp
-import numpy as np
-import os
 import timeit
-import multiprocessing
 import matplotlib.pyplot as plt
 
+######################## Only lines to modify are right here ###############################
 # Define variables
-nbElectrodes = 3
-nbEncoders = 3
+# Please note that encoders need to be 4 as of this version - 31 mars 2022
+nbElectrodes = 2
+nbEncoders = 4
+############################################################################################
+
+
 A=[]
+
 for i in range(0,nbElectrodes):
     electrode=[]
     A.append(electrode)
@@ -76,6 +78,8 @@ except KeyboardInterrupt:
         for j in range(0, len(A)):
             A[j].append(values[i + j])
 
+    print(A)
+
     fig, axs = plt.subplots(nbElectrodes)
     fig.suptitle('Resultats obtenus Electrodes')
     numeroElectrode = 0
@@ -88,9 +92,10 @@ except KeyboardInterrupt:
     fig, axs = plt.subplots(nbEncoders)
     fig.suptitle('Resultats obtenus Encodeurs')
     numeroEncodeur = 0
-    for i in range(nbElectrodes,len(A)):
+    for i in range(nbElectrodes, len(A)):
         axs[numeroEncodeur].plot(A[i])
         axs[numeroEncodeur].set_title(f'Encodeur {numeroEncodeur}')
         numeroEncodeur += 1
     plt.show()
+
     print('Acquisition done')
